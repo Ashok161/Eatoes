@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
 const { Sequelize } = require('sequelize');
 
 const connectDBMongo = async () => {
+    // Existing MongoDB logic
     try {
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
@@ -16,12 +16,13 @@ const connectDBMongo = async () => {
 
 const connectDBPostgres = async () => {
     try {
+        console.log('Attempting to connect to PostgreSQL with DATABASE_URL:', process.env.DATABASE_URL);
         const sequelize = new Sequelize(process.env.DATABASE_URL, {
             dialect: 'postgres',
             dialectOptions: {
                 ssl: {
                     require: true,
-                    rejectUnauthorized: false, // Required for Render
+                    rejectUnauthorized: false,
                 },
             },
         });
