@@ -20,6 +20,7 @@ const connectDBPostgres = async () => {
                 ssl: {
                     require: true,
                     rejectUnauthorized: false, // Allow self-signed certificates
+                    rejectUnauthorised: false, // Additional fallback for some environments
                 },
             },
             logging: (msg) => console.log('Sequelize:', msg), // Debug SQL queries
@@ -40,6 +41,7 @@ const getSequelizeInstance = () => {
             ssl: {
                 require: true,
                 rejectUnauthorized: false,
+                rejectUnauthorised: false,
             },
         },
         logging: (msg) => console.log('Sequelize:', msg),
