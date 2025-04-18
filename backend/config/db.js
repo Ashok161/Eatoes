@@ -19,9 +19,10 @@ const connectDBPostgres = async () => {
             dialectOptions: {
                 ssl: {
                     require: true,
-                    rejectUnauthorized: false,
+                    rejectUnauthorized: false, // Allow self-signed certificates
                 },
             },
+            logging: (msg) => console.log('Sequelize:', msg), // Add logging for debugging
         });
         await sequelize.authenticate();
         console.log('PostgreSQL connected successfully.');
@@ -41,6 +42,7 @@ const getSequelizeInstance = () => {
                 rejectUnauthorized: false,
             },
         },
+        logging: (msg) => console.log('Sequelize:', msg),
     });
 };
 
