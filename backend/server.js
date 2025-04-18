@@ -7,17 +7,13 @@ const { connectDBMongo, connectDBPostgres, getSequelizeInstance } = require('./c
 dotenv.config();
 
 // --- Connect to Databases ---
-connectDBMongo();
+connectDBMongo(); // Connect to MongoDB
 connectDBPostgres().then(() => {
     const Order = require('./models/postgres/Order');
     const sequelize = getSequelizeInstance();
-    if (process.env.NODE_ENV !== 'production') {
-        sequelize.sync({ alter: true })
-            .then(() => console.log('PostgreSQL tables synced successfully.'))
-            .catch(err => console.error('Error syncing PostgreSQL tables:', err));
-    } else {
-        console.log('Skipping Sequelize sync in production.');
-    }
+    sequelize.sync({ force: true }) // Use force: true to create table
+        .then(() => console.log('PostgreSQL tables synced successfully.'))
+        .catch(err => console.error('Error syncing PostgreSQL tables:', err));
 });
 
 // --- Route Files ---
