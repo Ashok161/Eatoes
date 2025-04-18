@@ -11,14 +11,10 @@ connectDBMongo(); // Connect to MongoDB
 connectDBPostgres().then(() => {
     const Order = require('./models/postgres/Order');
     const sequelize = getSequelizeInstance();
-    console.log('Attempting to sync PostgreSQL tables with force: true');
-    sequelize.sync({ force: true })
-        .then(() => {
-            console.log('PostgreSQL tables synced successfully.');
-            return sequelize.query('SELECT * FROM orders LIMIT 1');
-        })
-        .then(([results]) => console.log('Orders table exists:', results))
-        .catch(err => console.error('Error syncing or querying PostgreSQL tables:', err));
+    console.log('Skipping Sequelize sync as orders table is manually created.');
+}).catch(err => {
+    console.error('PostgreSQL connection failed:', err);
+    process.exit(1);
 });
 
 // --- Route Files ---
