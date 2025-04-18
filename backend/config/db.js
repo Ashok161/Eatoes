@@ -19,7 +19,7 @@ const connectDBPostgres = async () => {
             dialectOptions: {
                 ssl: {
                     require: true,
-                    rejectUnauthorized: false,
+                    rejectUnauthorized: false, // Allow self-signed certificates
                 },
             },
             logging: (msg) => console.log('Sequelize:', msg), // Debug SQL queries
