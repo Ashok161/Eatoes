@@ -3,10 +3,7 @@ const mongoose = require('mongoose');
 
 const connectDBMongo = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(process.env.MONGO_URI);
         console.log('MongoDB connected successfully.');
     } catch (error) {
         console.error('MongoDB connection error:', error);
@@ -16,6 +13,7 @@ const connectDBMongo = async () => {
 
 const connectDBPostgres = async () => {
     try {
+        console.log('Attempting to connect to PostgreSQL with DATABASE_URL:', process.env.DATABASE_URL);
         const sequelize = new Sequelize(process.env.DATABASE_URL, {
             dialect: 'postgres',
             dialectOptions: {
@@ -24,6 +22,7 @@ const connectDBPostgres = async () => {
                     rejectUnauthorized: false,
                 },
             },
+            logging: (msg) => console.log('Sequelize:', msg), // Debug SQL queries
         });
         await sequelize.authenticate();
         console.log('PostgreSQL connected successfully.');
@@ -43,6 +42,7 @@ const getSequelizeInstance = () => {
                 rejectUnauthorized: false,
             },
         },
+        logging: (msg) => console.log('Sequelize:', msg),
     });
 };
 
