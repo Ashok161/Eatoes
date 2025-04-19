@@ -140,7 +140,3 @@ https://ashok-eatos.netlify.app/ (Wait for 40 seconds until the backend which is
 * Ensuring correct data flow between the frontend and backend, especially with item IDs from MongoDB being used in order creation in PostgreSQL.
 * Configuring CORS correctly for local development and the deployed frontend.
 * Basic validation of user inputs on both the frontend and backend.
-
-## Git Repository
-
-[Link to your Git repository (GitHub, GitLab)]
