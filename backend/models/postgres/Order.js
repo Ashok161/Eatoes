@@ -1,58 +1,63 @@
 const { DataTypes } = require('sequelize');
-const { getSequelizeInstance } = require('../../config/db');
+  const { getSequelizeInstance } = require('../../config/db');
 
-const sequelize = getSequelizeInstance(); // Get the initialized instance
+  const sequelize = getSequelizeInstance(); // Get the initialized instance
 
-const Order = sequelize.define('Order', {
-    // Model attributes are defined here
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    customerName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    customerPhone: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        // Optional: Add index for faster lookups by phone
-        // indexes: [{ unique: false, fields: ['customerPhone'] }]
-    },
-    // Store cart items directly as JSONB for simplicity
-    // Alternatively, create a separate OrderItem table and use associations
-    cartItems: {
-        type: DataTypes.JSONB, // Use JSONB for efficient querying in PG
-        allowNull: false,
-        defaultValue: [], // Default to an empty array
-        // Example structure: [{ menuItemId: 'mongo_id_string', name: 'Burger', quantity: 1, price: 9.99 }, ...]
-    },
-    totalPrice: {
-        type: DataTypes.DECIMAL(10, 2), // Store price precisely
-        allowNull: false,
-    },
-    orderStatus: {
-        type: DataTypes.STRING,
-        defaultValue: 'Received', // e.g., Received, Preparing, Ready, Completed
-        allowNull: false,
-    }
-    // timestamps: true is default in Sequelize (adds createdAt, updatedAt)
-}, {
-    // Other model options go here
-    tableName: 'orders', // Optional: specify table name
-    indexes: [
-        // Add an index on customerPhone for faster lookup
-        {
-            fields: ['customerPhone']
-        }
-    ]
-});
+  const Order = sequelize.define('Order', {
+      // Model attributes are defined here
+      id: {
+          type: DataTypes.INTEGER,
+          autoIncrement: true,
+          primaryKey: true,
+          field: 'id',
+      },
+      customerName: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+          field: 'customername',
+      },
+      customerPhone: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+          field: 'customerphone',
+      },
+      cartItems: {
+          type: DataTypes.JSONB,
+          allowNull: false,
+          defaultValue: [],
+          field: 'cartitems',
+      },
+      totalPrice: {
+          type: DataTypes.DECIMAL(10, 2),
+          allowNull: false,
+          field: 'totalprice',
+      },
+      orderStatus: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+          defaultValue: 'Received',
+          field: 'orderstatus',
+      },
+      createdAt: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
+          field: 'createdat',
+      },
+      updatedAt: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
+          field: 'updatedat',
+      },
+  }, {
+      // Other model options go here
+      tableName: 'orders',
+      timestamps: true,
+      underscored: false,
+      indexes: [
+          {
+              fields: ['customerphone'],
+          },
+      ],
+  });
 
-// Optional: If you want to run sync specifically for this model after connection
-// (async () => {
-//   await Order.sync({ alter: true });
-//   console.log("The Order table was just (re)created!");
-// })();
-
-module.exports = Order;
+  module.exports = Order;
