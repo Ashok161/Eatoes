@@ -5,7 +5,7 @@
 
 This is a prototype of a simple online ordering system for "The Digital Diner" restaurant. Users can browse the menu, add items to a cart, and place pickup orders.
 
-## Note -  (Wait for 40 seconds until the backend which is deployed at Render website get's active (this is due to the free version of the render website which is only available for 90 days) )
+## Note -  (Wait for 40 seconds until the backend which is deployed at Render website get's active (this is due to the free version of the render service which is only available for 90 days) )
 
 ## Technical Stack
 
